@@ -5,6 +5,26 @@ public class Match {
     private Team team2;
     private int team1Score;
     private int team2Score;
+    private Team curTeamBall;
+    private Game game;
+
+    public int getTeam1Score() {
+        return team1Score;
+    }
+
+    public void setTeam1Score(int team1Score) {
+        this.team1Score = team1Score;
+    }
+
+    public int getTeam2Score() {
+        return team2Score;
+    }
+
+    public void setTeam2Score(int team2Score) {
+        this.team2Score = team2Score;
+    }
+
+
 
     public Match(Team team1, Team team2) {
         this.team1 = team1;
@@ -27,11 +47,41 @@ public class Match {
         this.team2 = team2;
     }
 
-    public void start(){
+    public Team getCurTeamBall() {
+        return curTeamBall;
+    }
+
+    public Team getOtherTeam() {
+        return (curTeamBall == team1) ? team2 : team1;
+    }
+
+
+
+    public void changeCurTeamBall() {
+        this.curTeamBall = (curTeamBall == team1) ? team2 : team1;
+    }
+
+    public void start() {
+
+//        todo: game process here
+        System.out.println("Подбрасывается манетка");
+        curTeamBall = (coin()) ? team1 : team2;
+
+        System.out.println("Команда " + curTeamBall.getName() + " начинает игру");
+
+        game = new Game(this);
+        game.startGame();
+
+
 
     }
 
-    public void info(){
+    private boolean coin() {
+        int coin = (int) (Math.round(Math.random()));
+        return coin != 0;
+    }
+
+    public void info() {
         System.out.println("Матч " + team1.getName() + " vs " + team2.getName());
         System.out.println(team1.getName() + " : ");
         team1.info();
@@ -41,5 +91,7 @@ public class Match {
         team2.info();
 
     }
+
+
 
 }
