@@ -10,7 +10,7 @@ public class Goalkeeper extends Player {
     }
 
     //Защита ворот
-    public void goalDefense(){
+    public void goalDefense() {
 
     }
 

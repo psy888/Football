@@ -45,19 +45,24 @@ public class Player {
         this.skills = skills;
     }
 
-//    пробежка
-    public void run(){
+    //    пробежка
+    public void run() {
 
     }
 
-//    забрать мячь
-    public void takeBall(){
-
-    }
-//      пас мяча игроку своей команды
-    public void pass(){
+    //    забрать мячь
+    public void takeBall() {
 
     }
 
+    //      пас мяча игроку своей команды
+    public void pass() {
+
+    }
+
+
+    public void info() {
+        System.out.println(lastName + " " + firstName + " " + number + " " + this.getClass().getSimpleName());
+    }
 
 }
