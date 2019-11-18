@@ -6,8 +6,7 @@ public class Game {
     Match match;
     Random random;
     int curActivePlayerIndex;
-    int[] attackOrder = new int[]{}; //
-    int[] defenceOrder = new int[]{};
+    int counter;
 
     public Game(Match match) {
         this.match = match;
@@ -63,7 +62,9 @@ public class Game {
     private void attack() {
         boolean isGoal = false;
         do {
+            String msg = UI.getPositionName(curActivePlayerIndex) + " ";
             Player playerWithBall = match.getCurTeamBall().getTeamPlayers()[curActivePlayerIndex];
+            msg+=playerWithBall.getLastName() + " под номером " +  playerWithBall.getNumber() + " ";
             int opponentIndex = getOpponentIndex();
             int teamMateIndex = getTeamMateIndex();
             Player playerOpponent = null;
@@ -74,32 +75,61 @@ public class Game {
             }
 //            boolean isSuccess = false;
             //todo game logic here
-            if(teamMateIndex<10) { // если пас
+            if (teamMateIndex < 10) { // если пас
 //                todo сравнить skill вратаря и нападающего противника + random factor
                 boolean isSuccess = playerWithBall.pass(playerOpponent);
+                UI.msg(" пасует на " + UI.getPositionName(teamMateIndex) +" "+
+                        match.getCurTeamBall().getTeamPlayers()[teamMateIndex].getLastName() +
+                        " под номером " +  match.getCurTeamBall().getTeamPlayers()[teamMateIndex].getNumber());
                 if (isSuccess) {
-                    curActivePlayerIndex = teamMateIndex; //мячь переходит к защитнику или полузащитнику
+                    curActivePlayerIndex = teamMateIndex;
+                    UI.msg("Техничный пас проходит и атака продолжается..");
                 } else {
+                    UI.msg("Пас не проходит, мяч перехватывает " + UI.getPositionName(opponentIndex) +
+                            " " + playerOpponent.getLastName() + " и разворачивает атаку в сторону противника.");
                     match.changeCurTeamBall(); //мячь переходит к противнику
                     curActivePlayerIndex = opponentIndex;
                 }
-            }else{ //удар по воротам
+            } else { //удар по воротам
+
+                UI.msg("бъет по воротам и... ");
 //                todo сравнить skill вратаря и нападающего противника + random factor
                 isGoal = playerWithBall.makeGoal(playerOpponent);
                 if (isGoal) {
                     addTeamScore();
                     //todo передать мяч нападающему или полузащитнику другой команды
+                    UI.msg("\nГОООООЛ!!!!!\nСчет :\n" +
+                            match.getTeam1().getName() + " " +
+                            match.getTeam1Score() + " : " +
+                            match.getTeam2Score() + " " +
+                            match.getTeam2().getName());
+
                     match.changeCurTeamBall();
-                    curActivePlayerIndex = (isRandom())?getRandForwardIndex():getRandMidfielderIndex();
+                    curActivePlayerIndex = (isRandom()) ? getRandForwardIndex() : getRandMidfielderIndex();
+                }else {
+                    UI.msg(playerOpponent.getLastName() + " под номером " +
+                            playerOpponent.getNumber() + " спасает ситуацию и останавливает атаку соперника\nСчет все так же :\n" +
+                            match.getTeam1().getName() + " " +
+                            match.getTeam1Score() + " : " +
+                            match.getTeam2Score() + " " +
+                            match.getTeam2().getName());
                 }
             }
-        } while (!isGoal);
-            UI.msg("ГОЛ!!!");
-//        attack();
+            try {
+                Thread.sleep(100);
+                counter++;
+            }catch (InterruptedException ex){
+                System.out.println("Error " + ex.getMessage());
+            }
+        } while (!isGoal&&counter<90);
+        if(counter<90) {
+            attack();
+        }
     }
 
     public void startGame() {
         attack();
+
     }
 
 

@@ -57,6 +57,9 @@ public class Player {
 
     //      пас мяча игроку своей команды
     public boolean pass(Player opponent) {
+        if(opponent==null){
+            return true;
+        }
         // todo сравнить skill вратаря и нападающего противника + random factor
         int result = this.skills.compare(opponent.getSkills());
         if(result>0){
