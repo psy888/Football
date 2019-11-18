@@ -56,13 +56,20 @@ public class Player {
     }
 
     //      пас мяча игроку своей команды
-    public void pass() {
+    public boolean pass(Player opponent) {
+        // todo сравнить skill вратаря и нападающего противника + random factor
 
+        return true;
     }
 
+    public boolean makeGoal(Player opponent){
+
+        return true;
+    }
 
     public void info() {
         System.out.println(lastName + " " + firstName + " " + number + " " + this.getClass().getSimpleName());
     }
+
 
 }

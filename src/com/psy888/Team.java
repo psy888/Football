@@ -27,13 +27,16 @@ public class Team {
 
     {
         teamPlayers[0] = goalkeeper;
+
         teamPlayers[1] = rightDefender;
         teamPlayers[2] = leftDefender;
         teamPlayers[3] = centralDefender;
         teamPlayers[4] = centralDefender2;
+
         teamPlayers[5] = rightMidfielder;
         teamPlayers[6] = leftMidfielder;
         teamPlayers[7] = centralMidfielder;
+
         teamPlayers[8] = centralForward;
         teamPlayers[9] = rightForward;
         teamPlayers[10] = leftForward;

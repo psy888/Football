@@ -9,7 +9,5 @@ public class Forward extends Player{
         super(firstName, lastName, number);
     }
 
-    public void makeGoal(){
 
-    }
 }
