@@ -37,12 +37,14 @@ public class Game {
     private int getTeamMateIndex() {
         switch (curActivePlayerIndex) {
             case 0: //goalkeeper
-                return (isRandom()) ? getRandDefenderIndex() : getRandMidfielderIndex();
+                return getRandDefenderIndex();
+//                return (isRandom()) ? getRandDefenderIndex() : getRandMidfielderIndex();
             case 1:
             case 2:
             case 3:
             case 4: //defender
-                return (isRandom()) ? getRandMidfielderIndex() : getRandForwardIndex();
+                return getRandMidfielderIndex();
+//                return (isRandom()) ? getRandMidfielderIndex() : getRandForwardIndex();
             case 5:
             case 6:
             case 7: //midfielder
@@ -53,7 +55,7 @@ public class Game {
                 int index = 0;
                 do {
                     index = getRandForwardIndex();
-                } while (index != curActivePlayerIndex);
+                } while (index == curActivePlayerIndex);
                 return (isRandom()) ? index : 99;
         }
         return 99;
@@ -77,6 +79,7 @@ public class Game {
             if (teamMateIndex < 10) { // если пас
 //                todo сравнить skill вратаря и нападающего противника + random factor
                 boolean isSuccess = playerWithBall.pass(playerOpponent);
+//                System.out.println("======================================isSuccess = " + isSuccess);
                 UI.msg(" пасует на " + UI.getPositionName(teamMateIndex) + " " +
                         match.getCurTeamBall().getTeamPlayers()[teamMateIndex].getLastName() +
                         " под номером " + match.getCurTeamBall().getTeamPlayers()[teamMateIndex].getNumber());
@@ -112,8 +115,12 @@ public class Game {
                             match.getTeam1Score() + " : " +
                             match.getTeam2Score() + " " +
                             match.getTeam2().getName());
+                    curActivePlayerIndex = opponentIndex;
+                    match.changeCurTeamBall(); //мячь переходит к противнику
                 }
             }
+
+
             try {
                 Thread.sleep(100);
                 counter++;

@@ -76,27 +76,38 @@ public class Skills {
      * @return 1 - won, -1 - lose
      */
     public int compare(Skills opponentSkills) {
-        int mind = (this.mindset > opponentSkills.getMindset()) ? 1 : -1;
-        int physic = (this.physical > opponentSkills.getPhysical()) ? 1 : -1;
-        int intelli = (this.intelligence > opponentSkills.getIntelligence()) ? 1 : -1;
-        int tech = (this.technique > opponentSkills.getTechnique()) ? 1 : -1;
+        int mind = compareInt(this.mindset , opponentSkills.getMindset());
+        int physic = compareInt(this.physical, opponentSkills.getPhysical());
+        int intelli = compareInt(this.intelligence, opponentSkills.getIntelligence());
+        int tech = compareInt(this.technique, opponentSkills.getTechnique());
         //случай...
-        int destiny = (int) (Math.random() * 12);
+        int destiny = (int) (Math.random() * 11);
+//        System.out.println("========================================destiny = " + destiny);
 
         int total = mind + physic + intelli + tech;
 
-        if (total == 0 && destiny > 6) {
+        if (total == 0 && destiny < 2) {
             return 1;
-        } else if (total == 0 && destiny < 6) {
+        } else if (total == 0) {
             return -1;
         }
 
-        if (total > 0 && destiny != 6) {
+        if (total > 2 && destiny != 8) {
             return 1;
         } else {
             return -1;
         }
 
+    }
+
+    int compareInt(int a, int b){
+        if (a>b){
+            return 1;
+        }else if(a<b){
+            return -1;
+        }else{
+            return 0;
+        }
     }
 
     public void addOnePoint() {

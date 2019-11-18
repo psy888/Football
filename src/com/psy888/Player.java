@@ -62,6 +62,7 @@ public class Player {
         }
         // todo сравнить skill вратаря и нападающего противника + random factor
         int result = this.skills.compare(opponent.getSkills());
+//        System.out.println("=================================result = " + result);
         if(result>0){
             this.skills.addOnePoint();
             return true;
