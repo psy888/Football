@@ -5,7 +5,7 @@ import java.util.Random;
 public class Game {
     Match match;
     Random random;
-    int curActivePlayerIndex;
+    int curActivePlayerIndex = 8;
     int counter;
 
     public Game(Match match) {
@@ -62,9 +62,8 @@ public class Game {
     private void attack() {
         boolean isGoal = false;
         do {
-            String msg = UI.getPositionName(curActivePlayerIndex) + " ";
             Player playerWithBall = match.getCurTeamBall().getTeamPlayers()[curActivePlayerIndex];
-            msg+=playerWithBall.getLastName() + " под номером " +  playerWithBall.getNumber() + " ";
+            UI.msg(UI.getPositionName(curActivePlayerIndex) + " "+ playerWithBall.getLastName() + " под номером " + playerWithBall.getNumber() + " ");
             int opponentIndex = getOpponentIndex();
             int teamMateIndex = getTeamMateIndex();
             Player playerOpponent = null;
@@ -78,9 +77,9 @@ public class Game {
             if (teamMateIndex < 10) { // если пас
 //                todo сравнить skill вратаря и нападающего противника + random factor
                 boolean isSuccess = playerWithBall.pass(playerOpponent);
-                UI.msg(" пасует на " + UI.getPositionName(teamMateIndex) +" "+
+                UI.msg(" пасует на " + UI.getPositionName(teamMateIndex) + " " +
                         match.getCurTeamBall().getTeamPlayers()[teamMateIndex].getLastName() +
-                        " под номером " +  match.getCurTeamBall().getTeamPlayers()[teamMateIndex].getNumber());
+                        " под номером " + match.getCurTeamBall().getTeamPlayers()[teamMateIndex].getNumber());
                 if (isSuccess) {
                     curActivePlayerIndex = teamMateIndex;
                     UI.msg("Техничный пас проходит и атака продолжается..");
@@ -106,7 +105,7 @@ public class Game {
 
                     match.changeCurTeamBall();
                     curActivePlayerIndex = (isRandom()) ? getRandForwardIndex() : getRandMidfielderIndex();
-                }else {
+                } else {
                     UI.msg(playerOpponent.getLastName() + " под номером " +
                             playerOpponent.getNumber() + " спасает ситуацию и останавливает атаку соперника\nСчет все так же :\n" +
                             match.getTeam1().getName() + " " +
@@ -118,12 +117,18 @@ public class Game {
             try {
                 Thread.sleep(100);
                 counter++;
-            }catch (InterruptedException ex){
+            } catch (InterruptedException ex) {
                 System.out.println("Error " + ex.getMessage());
             }
-        } while (!isGoal&&counter<90);
-        if(counter<90) {
+        } while (!isGoal && counter < 90);
+        if (counter < 90) {
             attack();
+        }else{
+            UI.msg("Матч закончен с счетом : \n"+
+                    match.getTeam1().getName() + " " +
+                    match.getTeam1Score() + " : " +
+                    match.getTeam2Score() + " " +
+                    match.getTeam2().getName());
         }
     }
 
