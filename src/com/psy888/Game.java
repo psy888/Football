@@ -94,12 +94,12 @@ public class Game {
                 }
             }
         } while (!isGoal);
-
-        attack();
+            UI.msg("ГОЛ!!!");
+//        attack();
     }
 
     public void startGame() {
-
+        attack();
     }
 
 

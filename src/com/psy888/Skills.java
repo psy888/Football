@@ -1,5 +1,7 @@
 package com.psy888;
 
+import java.util.Comparator;
+
 public class Skills {
     //https://www.ertheo.com/blog/en/elements-success-in-football/
     private int technique; //1. Technique – ball control, dribbling skills, passing accuracy, body control
@@ -22,8 +24,8 @@ public class Skills {
         if (i < 0) {
             return 0;
         }
-        if (i > 10) {
-            return 10;
+        if (i > 100) {
+            return 100;
         }
         return i;
     }
@@ -67,5 +69,51 @@ public class Skills {
      */
     public int[] getSkils() {
         return new int[]{this.technique, this.intelligence, this.physical, this.mindset};
+    }
+
+    /**
+     * @param opponentSkills
+     * @return 1 - won, -1 - lose
+     */
+    public int compare(Skills opponentSkills) {
+        int mind = (this.mindset > opponentSkills.getMindset()) ? 1 : -1;
+        int physic = (this.physical > opponentSkills.getPhysical()) ? 1 : -1;
+        int intelli = (this.intelligence > opponentSkills.getIntelligence()) ? 1 : -1;
+        int tech = (this.technique > opponentSkills.getTechnique()) ? 1 : -1;
+        //случай...
+        int destiny = (int) (Math.random() * 12);
+
+        int total = mind + physic + intelli + tech;
+
+        if (total == 0 && destiny > 6) {
+            return 1;
+        } else if (total == 0 && destiny < 6) {
+            return -1;
+        }
+
+        if (total > 0 && destiny != 6) {
+            return 1;
+        } else {
+            return -1;
+        }
+
+    }
+
+    public void addOnePoint() {
+        int whichSkill = (int) (Math.random() * 4);
+        switch (whichSkill) {
+            case 0:
+                mindset++;
+                break;
+            case 1:
+                physical++;
+                break;
+            case 2:
+                intelligence++;
+                break;
+            case 3:
+                technique++;
+                break;
+        }
     }
 }

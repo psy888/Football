@@ -4,7 +4,7 @@ public class Player {
     private String firstName;
     private String lastName;
     private int number;
-    Skills skills;
+    private Skills skills;
 
     public Player(String firstName, String lastName, int number) {
         this.firstName = firstName;
@@ -58,13 +58,24 @@ public class Player {
     //      пас мяча игроку своей команды
     public boolean pass(Player opponent) {
         // todo сравнить skill вратаря и нападающего противника + random factor
-
-        return true;
+        int result = this.skills.compare(opponent.getSkills());
+        if(result>0){
+            this.skills.addOnePoint();
+            return true;
+        }
+        return false;
     }
 
-    public boolean makeGoal(Player opponent){
 
-        return true;
+
+    public boolean makeGoal(Player opponent){
+        int result = this.skills.compare(opponent.getSkills());
+        if(result>0){
+            this.skills.addOnePoint();
+            this.skills.addOnePoint();
+            return true;
+        }
+        return false;
     }
 
     public void info() {
